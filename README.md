@@ -1,2 +1,2 @@
 # BMI-Calculator
-This is a BMI Calculator. It tells our body mass index
+This is a BMI Calculator. It tells your body mass index
