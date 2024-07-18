@@ -2,49 +2,47 @@ import inquirer from "inquirer";
 
 async function getHeight(){
     let validinput=false;
-    let feet:number|null=null;
-    let inches:number|null=null;
+    let m:number|null=null;
+
 
     while(!validinput){
     let input=await inquirer.prompt([
     {
-        name:"feet",
-        message:"Enter your Height\nFeet:",
+        name:"m",
+        message:"Enter your Height in Meters: ",
         type:"input"
     },
-    {
-        name:"inches",
-        message:"Inches:",
-        type:"input"
-    }
 ])
-const f=Number(input.feet)
-const i=Number(input.inches)
 
-if(isNaN(f) || isNaN(i))
+const f=Number(input.m)
+
+if(isNaN(f))
     {
     
         console.log("||||||||||\n||||||||||")
         console.log("Please enter a valid number for feet and inches")
     }
 
-else{
+else
+{
     validinput=true
-    feet=f;
-    inches=i
-    }
+    m=f;
 }
-   return{feet,inches};
 }
+
+   return{m};
+}
+
 
 async function getWeight() {
     let validinput=false;
     let weight:number|null=null;
+
 while(!validinput){
     let input=await inquirer.prompt([
     {
         name:"weight",
-        message:"Enter your weight ",
+        message:"Enter your weight in kgs ",
         type:"input"
     }
     ])
@@ -63,6 +61,26 @@ else
 }
     return{ weight }
 }
+
+async function calculateBmi(m:number,weight:number)
+{
+    let bmi:number|null=null
+ bmi=weight/ (m*m)
+return bmi
+}
+
+function category(bmi:number){
+    if (bmi <= 18.4) {
+        return "Underweight";
+    } else if (bmi >= 18.5 && bmi < 24.9) {
+        return "Normal weight";
+    } else if (bmi >= 25 && bmi < 29.9) {
+        return "Overweight";
+    } else {
+        return "Obesity";
+    }
+}
+
 async function main()
 {
 console.log("------------BMI Calculator------------")
@@ -82,14 +100,31 @@ let select=await inquirer.prompt([
     console.log("Name: "+select.name+"\nAge: "+select.age)
     console.log("|||||||||\n|||||||||")
 
-let{feet,inches}=await getHeight()
+    let{m}=await getHeight()
 
     console.log("||||||||||\n||||||||||")
-    console.log("Your height is\n"+feet+"ft "+inches+"inch")
+    console.log("Your height is\n"+m+"m")
 
 let{weight}=await getWeight()
 
     console.log("||||||||||\n||||||||||")
     console.log("Your Weight is "+weight+"Kg")
+
+if (m !== null && weight !== null) 
+    {
+        let bmi = await calculateBmi(m, weight);
+    
+        console.log("||||||||||\n||||||||||");
+        console.log("Your BMI is " + bmi);
+
+        let bmicat=category(bmi)
+        
+        console.log("||||||||||\n||||||||||");
+        console.log("Your BMI category is " + bmicat);
+        } 
+else
+    {
+        console.log("Failed to calculate BMI due to invalid height or weight.");
+    }
 }
 main();
