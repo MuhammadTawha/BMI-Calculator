@@ -82,10 +82,10 @@ async function main() {
     console.log("|||||||||\n|||||||||");
     let { m } = await getHeight();
     console.log("||||||||||\n||||||||||");
-    console.log("Your height is\n" + m + "m");
+    console.log("Your height is\n" + m + " m");
     let { weight } = await getWeight();
     console.log("||||||||||\n||||||||||");
-    console.log("Your Weight is " + weight + "Kg");
+    console.log("Your Weight is " + weight + " Kg");
     if (m !== null && weight !== null) {
         let bmi = await calculateBmi(m, weight);
         console.log("||||||||||\n||||||||||");
